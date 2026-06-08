@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CH-Filter.live | محرك البحث الذكي لقطع الغيار</title>
+
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-badge">CH</div>
+    <div>
+      <div class="logo-txt">CH<em>-Filter</em>.live</div>
+      <div class="logo-sub">محرك البحث الذكي لقطع الغيار</div>
+    </div>
+  </div>
+
+  <div class="live-dot-wrap">
+    <div class="ldot"></div>LIVE
+  </div>
+</header>
+
+<!-- PAGE TABS -->
+<div class="page-tabs">
+  <div class="ptab on" id="tab-search" onclick="switchPage('search')">🔍 البحث</div>
+  <div class="ptab" id="tab-admin" onclick="switchPage('admin')">⚙️ لوحة التحكم</div>
+</div>
+
+<!-- SEARCH PAGE -->
+<div class="page on" id="page-search">
+
+  <div class="step-label"><div class="step-num">1</div> اختر المنشأ</div>
+  <div class="origin-bar" id="originBar"></div>
+
+  <div class="step-label"><div class="step-num">2</div> اختر الشركة</div>
+  <div class="company-strip" id="companyStrip"></div>
+
+  <div class="step-label"><div class="step-num">3</div> طريقة البحث</div>
+  <div class="search-type-row">
+    <div class="stype on" data-stype="name" onclick="selectStype(this)">🔤 بالاسم</div>
+    <div class="stype" data-stype="code" onclick="selectStype(this)"># بالكود</div>
+    <div class="stype" data-stype="car" onclick="selectStype(this)">🚗 بالسيارة</div>
+    <div class="stype" data-stype="file" onclick="selectStype(this)">📁 برفع ملف</div>
+  </div>
+
+  <div class="step-label"><div class="step-num">4</div> البحث</div>
+
+  <div class="search-wrap" id="textSearchWrap">
+    <div class="search-row">
+      <span class="s-icon">🔍</span>
+      <input class="s-inp" id="mainSearch"
+        placeholder="اكتب هنا..."
+        onkeydown="if(event.key==='Enter')doSearch()">
+      <button class="s-btn" onclick="doSearch()">بحث ⚡</button>
+    </div>
+  </div>
+
+  <div class="file-drop" id="fileSearchDrop"
+    onclick="document.getElementById('fileSearchInput').click()">
+    <div class="file-drop-icon">📂</div>
+    <div class="file-drop-txt">رفع ملف</div>
+    <input type="file" id="fileSearchInput"
+      accept=".xlsx,.xls,.csv" onchange="searchByFile(this)">
+  </div>
+
+  <div id="resultsWrap" style="display:none">
+    <div class="res-header">
+      <div class="res-count">نتائج: <strong id="resCountTxt">0</strong></div>
+      <select class="sort-sel" onchange="sortResults(this.value)">
+        <option value="best">الأنسب</option>
+        <option value="price-asc">الأقل سعر</option>
+        <option value="price-desc">الأعلى سعر</option>
+      </select>
+    </div>
+    <div id="resultsList"></div>
+  </div>
+
+</div>
+
+<!-- ADMIN PAGE -->
+<div class="page" id="page-admin">
+
+  <div class="admin-grid">
+
+    <div class="admin-sidebar">
+      <h3>الشركات</h3>
+      <div id="adminCompanyList"></div>
+    </div>
+
+    <div class="admin-main">
+
+      <div class="admin-card">
+        <h3>إضافة شركة</h3>
+
+        <input id="coName" placeholder="اسم الشركة">
+        <select id="coOrigin">
+          <option value="jp">ياباني</option>
+          <option value="us">أمريكي</option>
+          <option value="de">ألماني</option>
+          <option value="kr">كوري</option>
+          <option value="cn">صيني</option>
+        </select>
+
+        <input id="coAffBase" placeholder="رابط العمولة">
+
+        <button onclick="addCompany()">إضافة</button>
+      </div>
+
+      <div class="admin-card">
+        <h3>رفع منتجات</h3>
+        <input type="file" id="productFile"
+          onchange="handleFileUpload(this)">
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
