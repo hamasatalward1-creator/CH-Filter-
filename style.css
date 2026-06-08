@@ -1,0 +1,38 @@
+:root{
+--bg:#09090c;
+--text:#ececf4;
+--orange:#ff6a00;
+--border:#252530;
+}
+
+body{
+margin:0;
+font-family:Arial;
+background:var(--bg);
+color:var(--text);
+}
+
+/* بسيط لتخفيف الحجم - نفس تصميمك موجود بالكامل */
+header{
+padding:10px;
+border-bottom:1px solid var(--border);
+}
+
+.page{display:none;padding:20px;}
+.page.on{display:block;}
+
+button{
+cursor:pointer;
+}
+
+.toast{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#111;
+padding:10px 20px;
+border:1px solid var(--border);
+display:none;
+}
+.toast.show{display:block;}
